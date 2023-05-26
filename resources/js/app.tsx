@@ -1,3 +1,4 @@
+import "../css/app.css"
 import "../css/all.css";
 import "../css/bootstrap.min.css"
 import './bootstrap';

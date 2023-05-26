@@ -1,7 +1,12 @@
 import React, { useState } from "react"
+import InputText from "@/Components/InputText";
+import UserIcon from "/public/assets/images/icon/user-2.svg"
+import InputPassword from "@/Components/InputPassword";
+
 const LoginForm = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+
 
 	const onSubmit = (e: React.SyntheticEvent): void => {
 		e.preventDefault();
@@ -18,38 +23,29 @@ const LoginForm = () => {
 		setPassword(value);
 	}
 
+
+
 	return (
 		<>
 			<form onSubmit={onSubmit}>
 				<div className="row">
-					<div className="col-lg-12">
-						<div className="form-inner mb-25">
-							<label htmlFor="email">Email*</label>
-							<div className="input-area">
-								<img src="assets/images/icon/email-2.svg" alt="" />
-								<input
-									onChange={onChangeEmail}
-									value={email}
-									type="email"
-									id="email"
-									name="email"
-									placeholder="info@example.com" />
-							</div>
-						</div>
-					</div>
-					<div className="col-lg-12">
-						<div className="form-inner">
-							<label htmlFor="email">Password*</label>
-							<input
-								onChange={onChangePassword}
-								value={password}
-								type="password"
-								name="password"
-								id="password"
-								placeholder="Password" />
-							<i className="bi bi-eye-slash" id="togglePassword"></i>
-						</div>
-					</div>
+					<InputText
+						onChange={onChangeEmail}
+						className="col-lg-12"
+						name="email"
+						title="Email*"
+						srcIcon={UserIcon}
+						placeholder="info@example.com" />
+
+					<InputPassword
+						name="password"
+						onChange={onChangePassword}
+						className="col-lg-12"
+						title="Password*"
+						placeholder="info@example.com"
+						value={password}
+					/>
+
 					<div className="col-lg-12">
 						<div className="form-agreement form-inner d-flex justify-content-between flex-wrap">
 							<div className="form-group">

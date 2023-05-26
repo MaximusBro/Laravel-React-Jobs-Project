@@ -1,0 +1,49 @@
+import React, { memo, useState } from 'react'
+interface InputTextProps {
+	className: string,
+	name: string;
+	title: string;
+	placeholder?: string;
+	value: string;
+	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	onClickIcon?: () => void;
+}
+const InputPassword: React.FC<InputTextProps> = memo(({
+	className,
+	name,
+	title,
+	placeholder,
+	value,
+	onChange, }) => {
+
+	const [passwordType, setPasswordType] = useState("password");
+	const [passwordIconClass, setPasswordIconClass] = useState("bi bi-eye-slash")
+
+	const handleTogle = () => {
+		if (passwordType === "password") {
+			setPasswordType("text");
+			setPasswordIconClass("bi bi-eye-slash bi-eye")
+		} else {
+			setPasswordType("password");
+			setPasswordIconClass("bi bi-eye-slash")
+		}
+	}
+	return (
+		<div className={className}>
+			<div className="form-inner">
+				<label htmlFor={name}>{title}</label>
+				<input
+					onChange={onChange}
+					value={value}
+					autoComplete="on"
+					id={name}
+					name={name}
+					type={passwordType}
+					placeholder={placeholder} />
+				<i onClick={handleTogle} className={passwordIconClass} id="togglePassword"></i>
+			</div>
+		</div>
+	)
+})
+
+export default InputPassword

@@ -1,13 +1,17 @@
 import React, { memo } from 'react'
+import InputError from '../InputError';
 
 interface InputSelectProps {
 	className: string,
 	title: string;
 	name: string;
 	srcIcon: string;
-	options: Array<string>
+	options: Array<string>;
+	error: string;
+	value: string;
+	onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
-const InputSelect: React.FC<InputSelectProps> = memo(({ className, title, name, srcIcon, options }) => {
+const InputSelect: React.FC<InputSelectProps> = memo(({ className, title, name, srcIcon, options, value, error, onChange }) => {
 	return (
 		<div className={className}>
 			<div className="form-inner mb-25">
@@ -15,7 +19,9 @@ const InputSelect: React.FC<InputSelectProps> = memo(({ className, title, name, 
 				<div className="input-area">
 					<img src={srcIcon} alt="" />
 					<select
-						className="select1"
+						className="nice-select"
+						onChange={onChange}
+						value={value}
 						id={name}
 						name={name}>
 						{options.map((option, index) => {
@@ -25,6 +31,8 @@ const InputSelect: React.FC<InputSelectProps> = memo(({ className, title, name, 
 						})}
 					</select>
 				</div>
+				{error ? <InputError message={error} /> : null}
+
 			</div>
 		</div>
 	)

@@ -7877,8 +7877,8 @@ header.style-7 .main-menu ul li.menu-item-has-children > i {
 }
 .form-wrapper form .form-inner i {
   position: absolute;
-  right: 20px;
-  bottom: 11px;
+  right: 10px;
+  bottom: 3px;
   color: var(--primary-color1);
   cursor: pointer;
 }

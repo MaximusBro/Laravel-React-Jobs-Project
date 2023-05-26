@@ -1,10 +1,13 @@
 import React, { memo, useState } from 'react'
+import InputError from '../InputError';
 interface InputTextProps {
 	className: string,
 	name: string;
 	title: string;
+	error: string;
 	placeholder?: string;
 	value: string;
+	onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onClickIcon?: () => void;
 }
@@ -14,6 +17,7 @@ const InputPassword: React.FC<InputTextProps> = memo(({
 	title,
 	placeholder,
 	value,
+	error,
 	onChange, }) => {
 
 	const [passwordType, setPasswordType] = useState("password");
@@ -32,6 +36,7 @@ const InputPassword: React.FC<InputTextProps> = memo(({
 		<div className={className}>
 			<div className="form-inner">
 				<label htmlFor={name}>{title}</label>
+
 				<input
 					onChange={onChange}
 					value={value}
@@ -41,7 +46,10 @@ const InputPassword: React.FC<InputTextProps> = memo(({
 					type={passwordType}
 					placeholder={placeholder} />
 				<i onClick={handleTogle} className={passwordIconClass} id="togglePassword"></i>
+
+
 			</div>
+			{error ? <InputError message={error} /> : null}
 		</div>
 	)
 })

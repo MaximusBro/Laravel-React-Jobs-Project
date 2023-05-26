@@ -1,5 +1,6 @@
-import "../css/app.css"
 import "../css/all.css";
+import "../css/app.css"
+import "../css/animate.css"
 import "../css/bootstrap.min.css"
 import './bootstrap';
 
@@ -12,11 +13,12 @@ import "../css/slick-theme.css"
 import "../css/slick.css";
 import "../css/nice-select.css"
 import "../css/select2.min.css"
-import "../css/animate.css"
 import "../css/jquery.fancybox.min.css"
 import "../css/datepicker.min.css"
 import "../css/jquery-ui.css";
+import "../css/uiicss.css"
 import "../css/style.css";
+
 
 
 

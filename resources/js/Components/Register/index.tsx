@@ -1,5 +1,5 @@
 import { useState, FormEvent } from "react"
-
+import { candidateSchema } from "@/Validations/CandidateValidation";
 //imports Components
 import RegisterButton from "./RegisterButton";
 import RegisterForm from "./RegisterForm";
@@ -22,37 +22,21 @@ const Register = () => {
 
 		const target = event.target as HTMLFormElement;
 
-		const firstName = (target.elements.namedItem('firstname') as HTMLInputElement).value;
-		const lastName = (target.elements.namedItem('lastname') as HTMLInputElement).value;
-		const userName = (target.elements.namedItem('username') as HTMLInputElement).value;
-		const email = (target.elements.namedItem('email') as HTMLInputElement).value;
-		const password = (target.elements.namedItem('password') as HTMLInputElement).value;
-		const confirmPassword = (target.elements.namedItem('confirmpassword') as HTMLInputElement).value;
-
-		const schema = Yup.object().shape({
-			firstName: Yup.string().min(2).required('First name is required'),
-			lastName: Yup.string().min(2).required('Last name is required'),
-			userName: Yup.string().min(4).required('User name is required'),
-			email: Yup.string().email('Invalid email address').required('Email is required'),
-			password: Yup.string().min(6).required('Password is required'),
-			confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords do not match').required('Confirm password is required'),
-		});
+		const CandidateData = {
+			firstName: (target.elements.namedItem('firstname') as HTMLInputElement).value,
+			lastName: (target.elements.namedItem('lastname') as HTMLInputElement).value,
+			userName: (target.elements.namedItem('username') as HTMLInputElement).value,
+			email: (target.elements.namedItem('email') as HTMLInputElement).value,
+			password: (target.elements.namedItem('password') as HTMLInputElement).value,
+			confirmPassword: (target.elements.namedItem('confirmpassword') as HTMLInputElement).value
+		}
 
 		try {
-			await schema.validate({
-				firstName,
-				lastName,
-				userName,
-				email,
-				password,
-				confirmPassword,
-			}, {
+			await candidateSchema.validate(CandidateData, {
 				abortEarly: false, // Validate all fields, don't stop on the first error
 			}
 			);
 
-			// Validation successful
-			console.log(`${firstName} AND ${lastName}\nWelcome ${userName}! Your email is ${email}\nJust to check, is it your password: ${password} ${confirmPassword}`);
 		} catch (error) {
 			// Handle validation errors
 			setErrorSubmit(error.errors)

@@ -130,7 +130,7 @@ const RegisterForm: React.FC<RegisterFormProps> = memo(({ variant }) => {
 										onBlur={handleBlur}
 										className="col-md-6"
 										name="companyName"
-										autoComplete="organization"
+										autoComplete="companyName"
 										title="Company Name*" srcIcon={CompanyIcon}
 										placeholder="Mr. Robert" />
 

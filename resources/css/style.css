@@ -2096,7 +2096,7 @@ header.style-1 .main-menu ul > li.menu-item-has-children::after {
 }
 @media (max-width: 991px) {
   header.style-1 .main-menu ul > li.menu-item-has-children::after {
-    display: none;
+    display: none;	
     visibility: hidden;
   }
 }
@@ -2106,7 +2106,7 @@ header.style-1 .main-menu ul > li:hover > ul.sub-menu {
   transform: translateY(0);
 }
 header.style-1 .main-menu ul > li::before {
-  content: url(../images/icon/menu-active.svg);
+  content: url(/public/images/icon/menu-active.svg);
   position: absolute;
   top: -11px;
   left: 50%;

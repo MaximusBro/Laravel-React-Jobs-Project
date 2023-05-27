@@ -5,7 +5,7 @@ import HeaderImg from "/public/assets/images/header1-logo.svg";
 
 interface MainMenuProps {
 	showMenu: boolean;
-	setShowMenu(param1: boolean): void;
+	setShowMenu(param: boolean): void;
 }
 const MainMenu: React.FC<MainMenuProps> = ({ showMenu, setShowMenu }) => {
 	return (

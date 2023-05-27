@@ -7,22 +7,23 @@ interface InputTextProps {
 	error: string;
 	placeholder?: string;
 	value: boolean;
+	children?: JSX.Element,
 	onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onClickIcon?: () => void;
 }
-const InputCheckBox: React.FC<InputTextProps> = ({ className, name, text, value, error, onChange }) => {
+const InputCheckBox: React.FC<InputTextProps> = ({ children, className, name, text, value, error, onChange }) => {
 	return (
 		<div className={className}>
 			<div className="form-agreement form-inner d-flex justify-content-between flex-wrap">
 				<div className="form-group two">
 					<input type="checkbox"
-
 						id={name} name={name}
 						onChange={onChange}
 						checked={value} />
 					<label htmlFor={name}>{text}</label>
 				</div>
+				{children}
 				{error ? <InputError message={error} /> : null}
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useCallback, useState, useEffect } from "react";
+import React, { memo, useCallback, useState, useEffect } from "react";
 
 // Componetns
 import InputText from "@/Components/InputText";
@@ -9,7 +9,7 @@ import InputCheckBox from "@/Components/InputCheckBox";
 //Formik
 import { Formik, FormikValues } from "formik";
 //Schemas
-import { candidateSchema, companySchema } from "@/Validations/RegisterValidation";
+import { candidateSchema, companySchema } from "@/Validations/registerValidation";
 
 //Icons
 import UserIcon from "/public/assets/images/icon/user-2.svg";
@@ -20,10 +20,21 @@ import CategoryIcon from "/public/assets/images/icon/category-2.svg";
 interface RegisterFormProps {
 	variant: string,
 }
+interface initialValues {
+	firstName: string,
+	lastName: string,
+	userName: string,
+	email: string,
+	companyName?: string,
+	companyType?: string,
+	password: string,
+	confirmPassword: string,
+	agreement: boolean,
+}
 const options = ["Digital Agency", "Digital Marketing Agency", "Software Company"];
 
 const RegisterForm: React.FC<RegisterFormProps> = memo(({ variant }) => {
-	const [initialValues, setInitialValues] = useState({
+	const [initialValues, setInitialValues] = useState<initialValues>({
 		firstName: "",
 		lastName: "",
 		userName: "",
@@ -125,7 +136,7 @@ const RegisterForm: React.FC<RegisterFormProps> = memo(({ variant }) => {
 								<>
 									<InputText
 										error={touched.companyName && errors.companyName ? errors.companyName : ""}
-										value={values.companyName}
+										value={values.companyName || ""}
 										onChange={handleChange}
 										onBlur={handleBlur}
 										className="col-md-6"
@@ -136,7 +147,7 @@ const RegisterForm: React.FC<RegisterFormProps> = memo(({ variant }) => {
 
 									<InputSelect
 										error={touched.companyType && errors.companyType ? errors.companyType : ""}
-										value={values.companyType}
+										value={values.companyType || ""}
 										onChange={handleChange}
 										className="col-md-6"
 										name="companyType"

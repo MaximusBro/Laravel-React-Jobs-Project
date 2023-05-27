@@ -1,5 +1,5 @@
 import { useState, FormEvent } from "react"
-import { candidateSchema } from "@/Validations/RegisterValidation";
+import { candidateSchema } from "@/Validations/registerValidation";
 //imports Components
 import RegisterButton from "./RegisterButton";
 import RegisterForm from "./RegisterForm";

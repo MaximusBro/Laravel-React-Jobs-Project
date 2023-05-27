@@ -46,8 +46,6 @@ const InputPassword: React.FC<InputTextProps> = memo(({
 					type={passwordType}
 					placeholder={placeholder} />
 				<i onClick={handleTogle} className={passwordIconClass} id="togglePassword"></i>
-
-
 			</div>
 			{error ? <InputError message={error} /> : null}
 		</div>

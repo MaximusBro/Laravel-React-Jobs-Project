@@ -1,17 +1,24 @@
-import React, { useState } from "react"
+import React, { useState, useCallback } from "react"
 import InputText from "@/Components/InputText";
 import UserIcon from "/public/assets/images/icon/user-2.svg"
+import EmailIcon from "/public/assets/images/icon/email-2.svg"
+//Formik
+import { Formik, FormikValues } from "formik";
+import { loginSchema } from "@/Validations/loginValidation";
 import InputPassword from "@/Components/InputPassword";
+import InputCheckBox from "@/Components/InputCheckBox";
+
+
 
 const LoginForm = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [passwordType, setPasswordType] = useState("password");
+	const [passwordIconClass, setPasswordIconClass] = useState("bi bi-eye-slash")
 
-
-	const onSubmit = (e: React.SyntheticEvent): void => {
-		e.preventDefault();
-		console.log(`Your email: ${email}\n Your password: ${password}`)
-	}
+	const onSubmitFormik = useCallback((values: FormikValues) => {
+		console.log(values)
+	}, [])
 
 	const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		const value = event.target.value;
@@ -23,46 +30,62 @@ const LoginForm = () => {
 		setPassword(value);
 	}
 
-
-
 	return (
 		<>
-			<form onSubmit={onSubmit}>
-				<div className="row">
-					<InputText
-						onChange={onChangeEmail}
-						className="col-lg-12"
-						name="email"
-						title="Email*"
-						srcIcon={UserIcon}
-						placeholder="info@example.com" />
+			<Formik
+				initialValues={{
+					email: "",
+					password: "",
+					remeber: false
+				}}
+				validationSchema={loginSchema}
+				validateOnBlur
+				onSubmit={onSubmitFormik}>
+				{({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => (
+					<form onSubmit={handleSubmit} >
+						<div className="row">
+							<InputText
+								error={touched.email && errors.email ? errors.email : ""}
+								value={values.email}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								className="col-lg-12"
+								name="email"
+								title="Email*"
+								srcIcon={EmailIcon}
+								placeholder="Jonson" />
+							<InputPassword
+								error={touched.password && errors.password ? errors.password : ""}
+								value={values.password}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								className="col-lg-12"
+								name="password"
+								title="Password*"
+								placeholder="Password" />
 
-					<InputPassword
-						name="password"
-						onChange={onChangePassword}
-						className="col-lg-12"
-						title="Password*"
-						placeholder="info@example.com"
-						value={password}
-					/>
+							<InputCheckBox
+								onChange={handleChange}
+								error={touched.remeber && errors.remeber ? errors.remeber : ""}
+								value={values.remeber}
+								className="col-lg-12"
+								name="remeber"
+								text="Remember Me" >
+								<a href="#" className="forgot-pass">Forget Password?</a>
+							</InputCheckBox>
 
-					<div className="col-lg-12">
-						<div className="form-agreement form-inner d-flex justify-content-between flex-wrap">
-							<div className="form-group">
-								<input type="checkbox" id="html" />
-								<label htmlFor="html">Remember Me</label>
+
+							<div className="col-lg-12">
+								<div className="form-inner">
+									<button
+										disabled={!isValid && !dirty}
+										className="primry-btn-2" type="submit">LogIn</button>
+								</div>
 							</div>
-							<a href="#" className="forgot-pass">Forget Password?</a>
+							<h6>Don’t have an account? <a href="register.html">Sign Up</a></h6>
 						</div>
-					</div>
-					<div className="col-lg-12">
-						<div className="form-inner">
-							<button className="primry-btn-2" type="submit">LogIn</button>
-						</div>
-					</div>
-					<h6>Don’t have an account? <a href="register.html">Sign Up</a></h6>
-				</div>
-			</form >
+					</form >)}
+			</Formik>
 		</>
 	)
 }

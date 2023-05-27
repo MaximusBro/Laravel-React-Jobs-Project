@@ -2103,10 +2103,11 @@ header.style-1 .main-menu ul > li.menu-item-has-children::after {
 header.style-1 .main-menu ul > li:hover > ul.sub-menu {
   visibility: visible;
   opacity: 1;
+	
   transform: translateY(0);
 }
 header.style-1 .main-menu ul > li::before {
-  content: url(/public/images/icon/menu-active.svg);
+  /* content: url(/public/images/icon/menu-active.svg); */
   position: absolute;
   top: -11px;
   left: 50%;

@@ -27,10 +27,8 @@
     "dependencies": {
         "@inertiajs/react": "^1.0.6",
         "@vitejs/plugin-react": "^4.0.0",
-        "formik": "^2.3.0",
         "framer-motion": "^10.12.16",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "yup": "^1.2.0"
+        "react-dom": "^18.2.0"
     }
 }

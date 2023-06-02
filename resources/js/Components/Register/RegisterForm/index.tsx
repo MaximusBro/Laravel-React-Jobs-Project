@@ -1,15 +1,12 @@
-import React, { memo, useCallback, useState, useEffect } from "react";
+import React, { memo, useCallback, useState, useEffect, FormEvent } from "react";
 
-// Componetns
+// Components
 import InputText from "@/Components/InputText";
 import InputSelect from "@/Components/InputSelect";
 import InputPassword from "@/Components/InputPassword";
 import InputCheckBox from "@/Components/InputCheckBox";
 
-//Formik
-import { Formik, FormikValues } from "formik";
-//Schemas
-import { candidateSchema, companySchema } from "@/Validations/registerValidation";
+import { useForm } from "@inertiajs/react";
 
 //Icons
 import UserIcon from "/public/assets/images/icon/user-2.svg";
@@ -18,189 +15,157 @@ import CompanyIcon from "/public/assets/images/icon/company-2.svg";
 import CategoryIcon from "/public/assets/images/icon/category-2.svg";
 
 interface RegisterFormProps {
-	variant: string,
+  variant: string,
 }
-interface initialValues {
-	firstName: string,
-	lastName: string,
-	userName: string,
-	email: string,
-	companyName?: string,
-	companyType?: string,
-	password: string,
-	confirmPassword: string,
-	agreement: boolean,
-}
+type initialValues = Record<string, unknown> & {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  companyName?: string;
+  companyType?: string;
+  password: string;
+  confirmPassword: string;
+  agreement: boolean;
+};
+// Options for  <InputSelect>
 const options = ["Digital Agency", "Digital Marketing Agency", "Software Company"];
 
+//Default for useForm values
+const condidateFields: initialValues = {
+  firstName: "",
+  lastName: "",
+  userName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  agreement: false,
+}
+
 const RegisterForm: React.FC<RegisterFormProps> = memo(({ variant }) => {
-	const [initialValues, setInitialValues] = useState<initialValues>({
-		firstName: "",
-		lastName: "",
-		userName: "",
-		email: "",
-		companyName: "",
-		companyType: "",
-		password: "",
-		confirmPassword: "",
-		agreement: false,
-	});
-	const onSubmitFormik = useCallback((values: FormikValues) => {
 
-		console.log(values)
-	}, [])
-	useEffect(() => {
-		if (variant === "company") {
-			setInitialValues({
-				firstName: "",
-				lastName: "",
-				userName: "",
-				email: "",
-				companyName: "",
-				companyType: "",
-				password: "",
-				confirmPassword: "",
-				agreement: false,
-			});
-		} else {
-			setInitialValues({
-				firstName: "",
-				lastName: "",
-				userName: "",
-				email: "",
-				password: "",
-				confirmPassword: "",
-				agreement: false,
-			});
-		}
-	}, [variant]);
-	return (
-		<div className="tab-pane fade show active"
-			id="nav-profile"
-			role="tabpanel"
-			aria-labelledby="nav-profile-tab">
+  const { data, setData, processing, reset } = useForm(condidateFields)
 
-			<Formik
-				enableReinitialize
-				initialValues={initialValues}
-				validationSchema={variant === "company" ? companySchema : candidateSchema}
-				validateOnBlur
-				onSubmit={onSubmitFormik}>
-				{({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => (
-					<form onSubmit={handleSubmit}>
-						<div className="row">
-							<InputText
-								error={touched.firstName && errors.firstName ? errors.firstName : ""}
-								value={values.firstName}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								className="col-md-6"
-								name="firstName"
-								title="First Name*"
-								srcIcon={UserIcon}
-								placeholder="Mr. Robert" />
-							<InputText
-								error={touched.lastName && errors.lastName ? errors.lastName : ""}
-								value={values.lastName}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								className="col-md-6"
-								name="lastName"
-								title="Last Name*"
-								srcIcon={UserIcon}
-								placeholder="Jonson" />
+  useEffect(() => {
+    if (variant === "company") {
+      setData({
+        ...condidateFields,
+        companyName: "",
+        companyType: options[0]
+      });
 
-							<InputText
-								error={touched.userName && errors.userName ? errors.userName : ""}
-								value={values.userName}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								className="col-md-6"
-								name="userName"
-								title="User Name*"
-								srcIcon={UserIcon}
-								placeholder="Jonson" />
+    } else {
+      setData(condidateFields);
+    }
+  }, [variant]);
 
-							<InputText
-								error={touched.email && errors.email ? errors.email : ""}
-								value={values.email}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								className="col-md-6"
-								name="email"
-								title="Email*"
-								srcIcon={EmailIcon}
-								placeholder="info@example.com" />
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    reset()
+  }
 
-							{variant === "company" ?
-								<>
-									<InputText
-										error={touched.companyName && errors.companyName ? errors.companyName : ""}
-										value={values.companyName || ""}
-										onChange={handleChange}
-										onBlur={handleBlur}
-										className="col-md-6"
-										name="companyName"
-										autoComplete="companyName"
-										title="Company Name*" srcIcon={CompanyIcon}
-										placeholder="Mr. Robert" />
+  return (
+    <div className="tab-pane fade show active"
+      id="nav-profile"
+      role="tabpanel"
+      aria-labelledby="nav-profile-tab">
 
-									<InputSelect
-										error={touched.companyType && errors.companyType ? errors.companyType : ""}
-										value={values.companyType || ""}
-										onChange={handleChange}
-										className="col-md-6"
-										name="companyType"
-										title="Company Type*"
-										srcIcon={CategoryIcon}
-										options={options} />
+      <form onSubmit={onSubmit}>
+        <div className="row">
 
-								</> : null}
+          <InputText
+            onChange={e => setData('firstName', e.target.value)}
+            value={data.firstName}
+            className="col-md-6"
+            name="firstName"
+            title="First Name*"
+            srcIcon={UserIcon}
+            placeholder="Mr. Robert" />
 
-							<InputPassword
-								error={touched.password && errors.password ? errors.password : ""}
-								value={values.password}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								className="col-md-6"
-								name="password"
-								title="Password*"
-								placeholder="Password" />
+          <InputText
+            value={data.lastName}
+            onChange={e => setData('lastName', e.target.value)}
+            className="col-md-6"
+            name="lastName"
+            title="Last Name*"
+            srcIcon={UserIcon}
+            placeholder="Jonson" />
 
-							<InputPassword
-								error={touched.confirmPassword && errors.confirmPassword ? errors.confirmPassword : ""}
-								value={values.confirmPassword}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								className="col-md-6"
-								name="confirmPassword"
-								title="Confirm Password*"
-								placeholder="Confirm Password" />
-							<InputCheckBox
-								onChange={handleChange}
-								error={touched.agreement && errors.agreement ? errors.agreement : ""}
-								value={values.agreement}
-								className="col-md-12"
-								name="agreement"
-								text="Here, I will agree company terms & conditions." />
+          <InputText
+            value={data.userName}
+            onChange={e => setData('userName', e.target.value)}
+            className="col-md-6"
+            name="userName"
+            title="User Name*"
+            srcIcon={UserIcon}
+            placeholder="Jonson" />
 
-							<div className="col-md-12">
-								<div className="form-inner">
-									<button
-										disabled={!isValid && !dirty}
-										className="primry-btn-2"
-										type="submit">Sign Up</button>
-								</div>
-							</div>
-						</div>
+          <InputText
+            value={data.email}
+            onChange={e => setData('email', e.target.value)}
+            className="col-md-6"
+            name="email"
+            title="Email*"
+            srcIcon={EmailIcon}
+            placeholder="info@example.com" />
 
+          {variant === "company" ?
+            <>
+              <InputText
+                value={data.companyName || ""}
+                onChange={e => setData('companyName', e.target.value)}
+                className="col-md-6"
+                name="companyName"
+                autoComplete="companyName"
+                title="Company Name*" srcIcon={CompanyIcon}
+                placeholder="Mr. Robert" />
 
-					</form>
-				)}
-			</Formik>
+              <InputSelect
+                value={data.companyType || ""}
+                onChange={e => setData('companyType', e.target.value)}
+                className="col-md-6"
+                name="companyType"
+                title="Company Type*"
+                srcIcon={CategoryIcon}
+                options={options} />
 
-		</div>
-	)
+            </> : null}
+
+          <InputPassword
+            value={data.password}
+            onChange={e => setData('password', e.target.value)}
+            className="col-md-6"
+            name="password"
+            title="Password*"
+            placeholder="Password" />
+
+          <InputPassword
+            value={data.confirmPassword}
+            onChange={e => setData('confirmPassword', e.target.value)}
+            className="col-md-6"
+            name="confirmPassword"
+            title="Confirm Password*"
+            placeholder="Confirm Password" />
+
+          <InputCheckBox
+            value={data.agreement}
+            onChange={e => setData('agreement', e.target.checked)}
+            className="col-md-12"
+            name="agreement"
+            text="Here, I will agree company terms & conditions." />
+
+          <div className="col-md-12">
+            <div className="form-inner">
+              <button
+                disabled={processing}
+                className="primry-btn-2"
+                type="submit">Sign Up</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  )
 })
 
 export default RegisterForm

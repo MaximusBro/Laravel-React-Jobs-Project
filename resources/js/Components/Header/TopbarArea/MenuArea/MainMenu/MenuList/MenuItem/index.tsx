@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useState, useEffect } from 'react'
-import { useAnimate, usePresence, motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface MenuItemProps {
 	title: string;
@@ -14,28 +14,12 @@ interface listProps {
 
 const MenuItem: React.FC<MenuItemProps> = memo(({ title, hrefTitle, list }) => {
 
-	const [submenu, animateSubmenu] = useAnimate();
 	const [showAccordion, setShowAccordion] = useState(false);
 
 	const toggleShowCardion = useCallback(() => {
 		setShowAccordion(state => !state)
 	}, []);
 
-	/* useEffect(() => {
-
-		const enterAnimation = async () => {
-			await animateSubmenu(
-				submenu.current,
-				{
-					height: showAccordion ? "auto" : 0,
-					overflow: showAccordion ? "hidden" : "none"
-				},
-				{ duration: 1 },
-			)
-		}
-		enterAnimation();
-
-	}, [showAccordion]) */
 
 	return (
 		<li className={showAccordion ? "menu-item-has-children active" : "menu-item-has-children"}>
@@ -51,7 +35,7 @@ const MenuItem: React.FC<MenuItemProps> = memo(({ title, hrefTitle, list }) => {
 						animate={{ height: "auto", }}
 						exit={{ height: 0 }}
 						transition={{ duration: 0.5 }}
-						ref={submenu} className="sub-menu" >
+						className="sub-menu" >
 						{list.map((item, index) => {
 							const { listTitle, listHref } = item;
 							return (

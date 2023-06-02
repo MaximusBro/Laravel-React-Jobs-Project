@@ -7,8 +7,8 @@ interface InputSelectProps {
 	name: string;
 	srcIcon: string;
 	options: Array<string>;
-	error: string;
 	value: string;
+	error?: string;
 	onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 const InputSelect: React.FC<InputSelectProps> = memo(({ className, title, name, srcIcon, options, value, error, onChange }) => {

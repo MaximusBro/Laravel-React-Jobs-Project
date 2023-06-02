@@ -2107,7 +2107,7 @@ header.style-1 .main-menu ul > li:hover > ul.sub-menu {
   transform: translateY(0);
 }
 header.style-1 .main-menu ul > li::before {
-  /* content: url(/public/images/icon/menu-active.svg); */
+  content: url("/assets/images/icon/menu-active.svg");
   position: absolute;
   top: -11px;
   left: 50%;

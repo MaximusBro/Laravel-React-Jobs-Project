@@ -4,10 +4,10 @@ interface InputTextProps {
 	className: string,
 	name: string;
 	text: string;
-	error: string;
 	placeholder?: string;
 	value: boolean;
 	children?: JSX.Element,
+	error?: string;
 	onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onClickIcon?: () => void;

@@ -1,4 +1,6 @@
 import "../css/all.css";
+import "../css/app.css"
+import "../css/animate.css"
 import "../css/bootstrap.min.css"
 import './bootstrap';
 
@@ -11,18 +13,19 @@ import "../css/slick-theme.css"
 import "../css/slick.css";
 import "../css/nice-select.css"
 import "../css/select2.min.css"
-import "../css/animate.css"
 import "../css/jquery.fancybox.min.css"
 import "../css/datepicker.min.css"
 import "../css/jquery-ui.css";
+import "../css/uiicss.css"
 import "../css/style.css";
+
 
 
 
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-
+import React from "react"
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
@@ -31,7 +34,10 @@ createInertiaApp({
 	setup({ el, App, props }) {
 		const root = createRoot(el);
 
-		root.render(<App {...props} />);
+		root.render(
+			<React.StrictMode>
+				<App {...props} />
+			</React.StrictMode>);
 	},
 	progress: {
 		color: '#4B5563',
